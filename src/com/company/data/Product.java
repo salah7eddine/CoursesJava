@@ -1,12 +1,13 @@
 package com.company.data;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import static com.company.data.Rating.*;
 import static java.math.RoundingMode.*;
 
-public class Product {
+public abstract class Product {
 
     public static final BigDecimal DISCOUNT_RATE = BigDecimal.valueOf(0.1);
     private int id;
@@ -64,11 +65,12 @@ public class Product {
         return rating;
     }
 
-    public Product applyRating(Rating newRating) {
+    public abstract  Product applyRating(Rating newRating);
+    /*{
         // method logic will be added here
 
         return new Product(this.id, this.name, this.price, newRating);
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -77,6 +79,7 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", rating=" + rating +
+                ", bestBefore=" + getBestBefore() +
                 '}';
     }
 
@@ -95,5 +98,9 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public LocalDate getBestBefore() {
+        return LocalDate.now();
     }
 }
