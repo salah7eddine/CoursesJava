@@ -1,6 +1,7 @@
 package com.company.data;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import static com.company.data.Rating.*;
 import static java.math.RoundingMode.*;
@@ -77,5 +78,22 @@ public class Product {
                 ", price=" + price +
                 ", rating=" + rating +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        //if (o == null || getClass() != o.getClass()) return false;
+        if(o instanceof Product) {
+            Product product = (Product) o;
+            return id == product.id && Objects.equals(name, product.name);
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

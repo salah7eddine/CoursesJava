@@ -18,7 +18,7 @@ public class Main {
         Product p4 = new Product();
         Product p5 = p3.applyRating(THREE_STAR);
         Product p6 = new Drink(104, "Chocolate", BigDecimal.valueOf(2.99), FIVE_STAR);
-        Product p7 = p6; //new Food(104, "Chocolate", BigDecimal.valueOf(2.99), FIVE_STAR, LocalDate.now().plusDays(2));
+        Product p7 = new Food(105, "Chocolate", BigDecimal.valueOf(2.99), FIVE_STAR, LocalDate.now().plusDays(2));
 
         //p3 = p3.applyRating(THREE_STAR);
 //        p1.setId(101);
