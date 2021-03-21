@@ -68,4 +68,14 @@ public class Product {
 
         return new Product(this.id, this.name, this.price, newRating);
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", rating=" + rating +
+                '}';
+    }
 }
