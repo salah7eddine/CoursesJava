@@ -19,7 +19,13 @@ public class Main {
 
         Product p1 = pm.createProduct(101, "Tea", BigDecimal.valueOf(1.99), NOT_RATED);
         pm.printProductReport();
-        p1 = pm.reviewProduct(p1, TWO_STAR, "Nice hot cup of tea");
+        p1 = pm.reviewProduct(p1, FOUR_STAR, "Nice hot cup of tea");
+        p1 = pm.reviewProduct(p1, TWO_STAR, "Rather weak tea");
+        p1 = pm.reviewProduct(p1, FOUR_STAR, "Fine tea");
+        p1 = pm.reviewProduct(p1, FIVE_STAR, "Good tea");
+        p1 = pm.reviewProduct(p1, THREE_STAR, "Perfect tea");
+        p1 = pm.reviewProduct(p1, ONE_STAR, "Just add some sucre");
+        p1 = pm.reviewProduct(p1, THREE_STAR, "Just add some lemon");
         pm.printProductReport();
        /* Product p2 = pm.createProduct(102, "Coffee", BigDecimal.valueOf(2.99), FOUR_STAR);
         Product p3 = pm.createProduct(103, "Cake", BigDecimal.valueOf(3.99), FIVE_STAR, LocalDate.now().plusDays(2));
