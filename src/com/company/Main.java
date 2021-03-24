@@ -27,19 +27,18 @@ public class Main {
         pm.reviewProduct(101, THREE_STAR, "Perfect tea");
         pm.reviewProduct(101, ONE_STAR, "Just add some sucre");
         pm.reviewProduct(101, THREE_STAR, "Just add some lemon");
-        //pm.printProductReport(101);
+        pm.printProductReport(101);
         System.out.println("-----------------------------");
         //pm.changeLocale("zh-CN");
-        pm.createProduct(102, "Coffee", BigDecimal.valueOf(2.99), FOUR_STAR);
-        pm.reviewProduct(102, FOUR_STAR, "Coffee wa ok");
-        pm.reviewProduct(102, TWO_STAR, "where is the milk ?");
-        pm.reviewProduct(102, FIVE_STAR, "It's perfect with tne spoons of sugar !");
+      /*  Product p2 = pm.createProduct(102, "Coffee", BigDecimal.valueOf(2.99), FOUR_STAR);
+        p2 = pm.reviewProduct(p2, FOUR_STAR, "Coffee wa ok");
+        p2 = pm.reviewProduct(p2, TWO_STAR, "where is the milk ?");
+        p2 = pm.reviewProduct(p2, FIVE_STAR, "It's perfect with tne spoons of sugar !");*/
         //pm.printProductReport(p2);
 
         Comparator<Product> ratingSorter = (p1, p2) -> p2.getRating().ordinal() - p1.getRating().ordinal();
         Comparator<Product> priceSorter = (p1, p2) -> p2.getPrice().compareTo(p1.getPrice());
-        pm.printProducts(priceSorter.thenComparing(priceSorter));
-        pm.printProducts(ratingSorter.thenComparing(priceSorter).reversed());
+        pm.printProducts(p -> p.getPrice().floatValue() < 2, (p1, p2) -> p2.getRating().ordinal() - p1.getRating().ordinal());
 
 
     }

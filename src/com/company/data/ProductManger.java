@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ProductManger {
 
@@ -64,28 +66,17 @@ public class ProductManger {
         List<Review> reviews = products.get(product);
         products.remove(product, reviews);
         reviews.add(new Review(rating, comments));
-        int sum = 0;
-        for(Review review: reviews) {
-            sum += review.getRating().ordinal();
-        }
 
-        boolean reviewed = false;
+        product = product.applyRating(Rateable.convert(
+                (int)Math.round(
+                        reviews.stream().mapToInt(r -> r.getRating().ordinal()).average().orElse(0))));
 
-        product = product.applyRating(Rateable.convert(Math.round((float) sum /reviews.size())));
         products.put(product, reviews);
         return product;
     }
 
     public Product findProduct(int id) {
-        Product result = null;
-
-        for(Product product: products.keySet()) {
-            if(product.getId() == id) {
-                result = product;
-                break;
-            }
-        }
-        return result;
+        return products.keySet().stream().filter(p -> p.getId() == id).findFirst().orElseGet(() -> null);
     }
 
     public void printProductReport(int id) {
@@ -93,7 +84,6 @@ public class ProductManger {
     }
 
     public void printProductReport(Product product) {
-        // formatting and printing logic will be added here.
         List<Review> reviews = products.get(product);
         StringBuilder txt = new StringBuilder();
 
@@ -102,27 +92,23 @@ public class ProductManger {
         txt.append("\n");
         Collections.sort(reviews);
 
-        for (Review review: reviews) {
-            txt.append(formatter.formatReview(review));
-            txt.append("\n");
-        }
         if(reviews.isEmpty()) {
-            txt.append(formatter.getText("no.reviews"));
-            txt.append("\n");
+            txt.append(formatter.getText("no.reviews") + '\n');
+        } else {
+            txt.append(reviews.stream().map(r->formatter.formatReview(r) + '\n').collect(Collectors.joining()));
         }
-
         System.out.println(txt);
     }
 
-    public void printProducts(Comparator<Product> sorter) {
-        List<Product> productList = new ArrayList<>(products.keySet());
-        productList.sort(sorter);
+    public void printProducts(Predicate<Product> filter, Comparator<Product> sorter) {
         StringBuilder txt = new StringBuilder();
 
-        for (Product product : productList) {
-            txt.append(formatter.formatProduct(product));
-            txt.append('\n');
-        }
+        products
+                .keySet()
+                .stream()
+                .sorted(sorter)
+                .filter(filter)
+                .forEach(p -> txt.append(formatter.formatProduct(p) + '\n'));
 
         System.out.println(txt);
     }
