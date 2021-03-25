@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class ProductManger {
@@ -26,6 +28,8 @@ public class ProductManger {
             "ru-RU", new ResourceFormatter(new Locale("ru", "RU")),
             "zh-CN", new ResourceFormatter(Locale.CHINA)
             );
+
+    private static final Logger logger = Logger.getLogger(ProductManger.class.getName());
 
     public ProductManger(Locale locale) {
         this(locale.toLanguageTag());
@@ -58,7 +62,12 @@ public class ProductManger {
     }
 
     public Product reviewProduct(int id, Rating rating, String comments) {
-        return reviewProduct(findProduct(id), rating, comments);
+        try {
+            return reviewProduct(findProduct(id), rating, comments);
+        } catch (ProductMangerException e) {
+            logger.log(Level.INFO, e.getMessage());
+        }
+        return null;
     }
 
     public Product reviewProduct(Product product, Rating rating, String comments) {
@@ -75,12 +84,21 @@ public class ProductManger {
         return product;
     }
 
-    public Product findProduct(int id) {
-        return products.keySet().stream().filter(p -> p.getId() == id).findFirst().orElseGet(() -> null);
+    public Product findProduct(int id) throws ProductMangerException {
+        return products
+                .keySet()
+                .stream()
+                .filter(p -> p.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new ProductMangerException("Product with id "+id+" not found")); //.get(); //.orElseGet(() -> null);
     }
 
     public void printProductReport(int id) {
-        printProductReport(findProduct(id));
+        try {
+            printProductReport(findProduct(id));
+        } catch (ProductMangerException e) {
+            logger.log(Level.SEVERE, null, e);
+        }
     }
 
     public void printProductReport(Product product) {
