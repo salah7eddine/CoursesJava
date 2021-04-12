@@ -13,12 +13,16 @@ public class Main {
     public static void main(String[] args) {
         ProductManger pm = new ProductManger("en-GB");
 
-        pm.createProduct(164, "Kombucha", BigDecimal.valueOf(1.99), NOT_RATED);
+       /* pm.createProduct(164, "Kombucha", BigDecimal.valueOf(1.99), NOT_RATED);
         pm.reviewProduct(164, TWO_STAR, "Looks like tea but is it ?");
         pm.reviewProduct(164, FOUR_STAR, "Fine tea");
         pm.reviewProduct(164, FOUR_STAR, "This is not tea");
         pm.reviewProduct(164, FIVE_STAR, "Perfect!");
-        pm.printProductReport(164);
+        pm.printProductReport(164);*/
+        //pm.dumpData();
+        //pm.restoreData();
+        //pm.printProductReport(101);
+        //pm.printProductReport(164);
         /*
             pm.createProduct(101, "Tea", BigDecimal.valueOf(1.99), NOT_RATED);
             pm.printProductReport(101);
@@ -27,11 +31,11 @@ public class Main {
         // pm.parseProduct("D,101,Tea,1.99,0,2019-09-19");
         //pm.parseProduct("D,101,Tea,1.99,0,2019-09-49");
         // pm.parseProduct("D,101,Tea,1.99,0,0");
-        pm.printProductReport(101);
+        //pm.printProductReport(101);
 
 
         //pm.parseProduct("D,103,Tea,1.99,0,2019-09-49");
-        pm.printProductReport(103);
+        //pm.printProductReport(103);
 
         //pm.parseReview("101,4,Nice hot cup of tea");
         //pm.parseReview("101,2,Rather weak tea");
