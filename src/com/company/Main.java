@@ -1,9 +1,6 @@
 package com.company;
 
-import com.company.data.Drink;
-import com.company.data.Food;
-import com.company.data.Product;
-import com.company.data.ProductManger;
+import com.company.data.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,27 +13,33 @@ public class Main {
     public static void main(String[] args) {
         ProductManger pm = new ProductManger("en-GB");
 
+        pm.createProduct(164, "Kombucha", BigDecimal.valueOf(1.99), NOT_RATED);
+        pm.reviewProduct(164, TWO_STAR, "Looks like tea but is it ?");
+        pm.reviewProduct(164, FOUR_STAR, "Fine tea");
+        pm.reviewProduct(164, FOUR_STAR, "This is not tea");
+        pm.reviewProduct(164, FIVE_STAR, "Perfect!");
+        pm.printProductReport(164);
         /*
             pm.createProduct(101, "Tea", BigDecimal.valueOf(1.99), NOT_RATED);
             pm.printProductReport(101);
         */
 
         // pm.parseProduct("D,101,Tea,1.99,0,2019-09-19");
-        pm.parseProduct("D,101,Tea,1.99,0,2019-09-49");
+        //pm.parseProduct("D,101,Tea,1.99,0,2019-09-49");
         // pm.parseProduct("D,101,Tea,1.99,0,0");
         pm.printProductReport(101);
 
 
-        pm.parseProduct("D,103,Tea,1.99,0,2019-09-49");
+        //pm.parseProduct("D,103,Tea,1.99,0,2019-09-49");
         pm.printProductReport(103);
 
-        pm.parseReview("101,4,Nice hot cup of tea");
-        pm.parseReview("101,2,Rather weak tea");
-        pm.parseReview("101,4,Fine tea");
-        pm.parseReview("101,4,Good tea");
-        pm.parseReview("101,5,Perfect tea");
-        pm.parseReview("101,3,just add some lemon");
-        pm.printProductReport(101);
+        //pm.parseReview("101,4,Nice hot cup of tea");
+        //pm.parseReview("101,2,Rather weak tea");
+        //pm.parseReview("101,4,Fine tea");
+        //pm.parseReview("101,4,Good tea");
+        //pm.parseReview("101,5,Perfect tea");
+        //pm.parseReview("101,3,just add some lemon");
+        //pm.printProductReport(101);
 
       /*  pm.printProductReport(101);
         pm.printProductReport(101);
@@ -56,6 +59,7 @@ public class Main {
         p2 = pm.reviewProduct(p2, FIVE_STAR, "It's perfect with tne spoons of sugar !");
         pm.printProductReport(p2);*/
 
+        pm.printProducts(p->p.getPrice().floatValue() < 2, (p1, p2) -> p2.getRating().ordinal() - p1.getRating().ordinal());
 
         // p11 is p2
         Comparator<Product> ratingSorter = (p1, p11) -> p11.getRating().ordinal() - p1.getRating().ordinal();

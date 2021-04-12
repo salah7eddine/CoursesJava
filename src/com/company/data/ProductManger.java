@@ -58,6 +58,7 @@ public class ProductManger {
 
     public ProductManger(String languageTag) {
         changeLocale(languageTag);
+        loadAllData();
     }
 
 
@@ -152,7 +153,7 @@ public class ProductManger {
         System.out.println(txt);
     }
 
-    private List<Review> loadReview(Product product) {*
+    private List<Review> loadReview(Product product) {
         List<Review> reviews = null;
         Path file = dataFolder.resolve(MessageFormat.format(config.getString("reviews.data.file"), product.getId()));
 
@@ -168,17 +169,30 @@ public class ProductManger {
         return reviews;
     }
 
+    private void loadAllData() {
+        try {
+            products = Files.list(dataFolder)
+                    .filter(file -> file.getFileName().toString().startsWith("product"))
+                    .map(file -> loadProduct(file)).filter(product -> product != null)
+                    .collect(Collectors.toMap(product -> product, product -> loadReview(product)));
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error loading data " + e.getMessage(), e);
+        }
+    }
+
     private Product loadProduct(Path file) {
         Product product = null;
 
         try {
             product = parseProduct(Files.lines(dataFolder.resolve(file), Charset.forName("UTF-8")).findFirst().orElseThrow());
         } catch (IOException e) {
-            logger.getLogger(ProductManger.class.getName()).log(Level.SEVERE, null, e);
+            //logger.getLogger(ProductManger.class.getName()).log(Level.SEVERE, null, e);
+            logger.log(Level.WARNING, "Error loading product " + e.getMessage());
         }
+        return product;
     }
 
-    public Review parseReview(String text) {
+    private Review parseReview(String text) {
         Review review = null;
         try {
             Object[] values = reviewFormat.parse(text);
@@ -191,7 +205,7 @@ public class ProductManger {
         return review;
     }
 
-    public Product parseProduct(String text) {
+    private Product parseProduct(String text) {
         Product product = null;
         try {
             Object[] values = productFormat.parse(text);
