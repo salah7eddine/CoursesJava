@@ -5,12 +5,14 @@ import com.company.data.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.company.data.Rating.*;
 
 public class Main {
 
     public static void main(String[] args) {
+
         ProductManger pm = ProductManger.getInstance(); //new ProductManger();
         pm.printProductReport(101, "en-GB");
         pm.printProductReport(102, "ru-RU");
