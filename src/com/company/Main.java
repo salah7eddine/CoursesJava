@@ -11,7 +11,9 @@ import static com.company.data.Rating.*;
 public class Main {
 
     public static void main(String[] args) {
-        ProductManger pm = new ProductManger("en-GB");
+        ProductManger pm = ProductManger.getInstance(); //new ProductManger();
+        pm.printProductReport(101, "en-GB");
+        pm.printProductReport(102, "ru-RU");
 
        /* pm.createProduct(164, "Kombucha", BigDecimal.valueOf(1.99), NOT_RATED);
         pm.reviewProduct(164, TWO_STAR, "Looks like tea but is it ?");
@@ -63,14 +65,16 @@ public class Main {
         p2 = pm.reviewProduct(p2, FIVE_STAR, "It's perfect with tne spoons of sugar !");
         pm.printProductReport(p2);*/
 
-        pm.printProducts(p->p.getPrice().floatValue() < 2, (p1, p2) -> p2.getRating().ordinal() - p1.getRating().ordinal());
+        //pm.printProducts(p->p.getPrice().floatValue() < 2, (p1, p2) -> p2.getRating().ordinal() - p1.getRating().ordinal());
 
         // p11 is p2
-        Comparator<Product> ratingSorter = (p1, p11) -> p11.getRating().ordinal() - p1.getRating().ordinal();
+       /* Comparator<Product> ratingSorter = (p1, p11) -> p11.getRating().ordinal() - p1.getRating().ordinal();
         Comparator<Product> priceSorter = (p1, p11) -> p11.getPrice().compareTo(p1.getPrice());
         pm.printProducts(p -> p.getPrice().floatValue() < 2, (p1, p11) -> p11.getRating().ordinal() - p1.getRating().ordinal());
 
-        pm.getDiscounts().forEach((rating, discount) -> System.out.println(rating +"\t"+ discount));
+        pm.getDiscounts().forEach((rating, discount) -> System.out.println(rating +"\t"+ discount));*/
+
+
 
     }
 }
