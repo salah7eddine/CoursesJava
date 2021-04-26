@@ -56,7 +56,7 @@ public abstract class Product implements Rateable<Product>, Serializable {
         this.price = price;
     }*/
 
-    public BigDecimal  getDiscount() {
+    public BigDecimal getDiscount() {
         // discount calculation logic will be added here
 
         return price.multiply(DISCOUNT_RATE).setScale(2, HALF_UP);
@@ -90,7 +90,7 @@ public abstract class Product implements Rateable<Product>, Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         //if (o == null || getClass() != o.getClass()) return false;
-        if(o instanceof Product) {
+        if (o instanceof Product) {
             Product product = (Product) o;
             return id == product.id; //&& Objects.equals(name, product.name);
         }
